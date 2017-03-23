@@ -1,0 +1,22 @@
+{
+  "name": "Daily Writing",
+  "description": "A daily writing tool",
+  "repository": "https://github.com/dwightgunning/dailywriting",
+  "keywords": ["node", "reactjs", "productivity", "dailywriting"],
+  "success_url": "/",
+   "buildpacks": [
+    {
+      "url": "heroku buildpacks:set https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ],
+  "addons": [],
+  "scripts": {
+    "postdeploy": "npm run build:dll"
+  },
+  "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "Heroku Production NPM Configuration. Must be 'false' so the app can be built on Heroku at deploy time.",
+      "value": "false"
+    },
+  }
+}
