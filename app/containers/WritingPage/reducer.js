@@ -16,31 +16,45 @@ const initialState = fromJS({
   words: '',
   startTime: '',
   milestoneCount: 5,
-  milestoneTime: ''
+  milestoneTime: '',
 });
 
 function writingPageReducer(state = initialState, action) {
-  switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
-    case CHANGE_WORDS:
-      let wordCount = action.words.length == 0 ? 0 : action.words.replace(/(\r\n|\n|\r)/g, " ").replace(/(\s\s+)/g, " ").trim().split(" ").length;
+  if (action.type === DEFAULT_ACTION) {
+    return state;
+  } else if (action.type === CHANGE_WORDS) {
+    const words = action.words;
+    const count = calculateWordCount(action.words);
+    let startTime = state.get('startTime');
+    let milestoneTime = state.get('milestoneTime');
 
-      if (!state.get('startTime')) {
-        state = state.set('startTime', new Date().toUTCString());
-      }
+    if (!startTime) {
+      startTime = new Date().toUTCString();
+    }
 
-      if (!state.get('milestoneTime') && wordCount >=  state.get('milestoneCount')) {
-        state = state.set('milestoneTime', new Date().toUTCString());
-      }
+    if (!milestoneTime && count >= state.get('milestoneCount')) {
+      milestoneTime = new Date().toUTCString();
+    }
 
-      return state
-        .set('words', action.words)
-        .set('count', wordCount);
-
-    default:
-      return state;
+    return state.merge({
+      words,
+      startTime,
+      milestoneTime,
+      count,
+    });
   }
+
+  return state;
+}
+
+function calculateWordCount(words) {
+  let wordCount = 0;
+
+  if (words.length > 0) {
+    wordCount = words.replace(/(\r\n|\n|\r)/g, ' ').replace(/(\s\s+)/g, ' ').trim().split(' ').length;
+  }
+
+  return wordCount;
 }
 
 export default writingPageReducer;

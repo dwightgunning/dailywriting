@@ -5,8 +5,6 @@
 */
 
 import React from 'react';
-// import styled from 'styled-components';
-
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -19,7 +17,7 @@ function WordCount(props) {
 }
 
 WordCount.propTypes = {
-  count: React.PropTypes.number
+  count: React.PropTypes.number,
 };
 
 export default WordCount;

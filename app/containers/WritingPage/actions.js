@@ -19,10 +19,10 @@ function changeWords(words) {
   return {
     type: CHANGE_WORDS,
     words,
-  }
+  };
 }
 
 export {
   defaultAction,
   changeWords,
-}
+};

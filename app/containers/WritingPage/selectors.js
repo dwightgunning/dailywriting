@@ -45,5 +45,5 @@ export {
   makeSelectWordCount,
   makeSelectStartTime,
   makeSelectMilestoneTime,
-  makeSelectWritingPage
+  makeSelectWritingPage,
 };
