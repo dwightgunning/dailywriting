@@ -1,8 +1,5 @@
 /* eslint consistent-return:0 */
-
 const express = require('express');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const logger = require('./logger');
 
 const argv = require('minimist')(process.argv.slice(2));
@@ -12,8 +9,7 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 
-const api = require('./api');
-app.use('/api', api);
+const api = require('../api');
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

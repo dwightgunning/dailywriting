@@ -1,25 +1,38 @@
 import { createSelector } from 'reselect';
 
 /**
- * Direct selector to the loginPage state domain
+ * Direct selector to the LoginPage state domain
  */
-const selectLoginPageDomain = () => (state) => state.get('loginPage');
+const selectLoginPageDomain = () => (state) => {
+  return state.get('loginPage');
+}
 
 /**
  * Other specific selectors
  */
 
+const makeSelectEmail = () => createSelector(
+  selectLoginPageDomain(),
+  (substate) => substate.get('email')
+)
+
+const makeSelectPassword = () => createSelector(
+  selectLoginPageDomain(),
+  (substate) => substate.get('password')
+)
 
 /**
- * Default selector used by LoginPage
+ * Default selector used by LoginForm2Container
  */
-
-const makeSelectLoginPage = () => createSelector(
+const makeSelectLoginForm2Container = () => createSelector(
   selectLoginPageDomain(),
   (substate) => substate.toJS()
 );
 
-export default makeSelectLoginPage;
+export default selectLoginPageDomain;
 export {
-  selectLoginPageDomain,
-};
+  makeSelectEmail,
+  makeSelectPassword,
+  makeSelectLoginForm2Container,
+  selectLoginPageDomain
+}

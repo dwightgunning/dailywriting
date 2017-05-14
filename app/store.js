@@ -8,6 +8,8 @@ import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 
+import { loginFlowSaga, logoutFlowSaga } from './containers/AuthProvider/sagas';
+
 const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(initialState = {}, history) {
@@ -39,6 +41,8 @@ export default function configureStore(initialState = {}, history) {
   );
 
   // Extensions
+  sagaMiddleware.run(loginFlowSaga);
+  sagaMiddleware.run(logoutFlowSaga);
   store.runSaga = sagaMiddleware.run;
   store.asyncReducers = {}; // Async reducer registry
 

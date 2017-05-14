@@ -8,6 +8,10 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.LoginPage.header',
-    defaultMessage: 'This is LoginPage container !',
+    defaultMessage: 'Login',
   },
+  submitLogin: {
+    id: 'app.containers.LoginPage.submitLogin',
+    defaultMessage: 'Login',
+  }
 });

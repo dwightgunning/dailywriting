@@ -18,6 +18,10 @@ import { useScroll } from 'react-router-scroll';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import 'sanitize.css/sanitize.css';
 
+// Tap Events for Material UI
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin()
+
 // Import root app
 import App from 'containers/App';
 
@@ -31,7 +35,6 @@ import LanguageProvider from 'containers/LanguageProvider';
 /* eslint-disable import/no-unresolved, import/extensions */
 import '!file-loader?name=[name].[ext]!./favicon.ico';
 import '!file-loader?name=[name].[ext]!./manifest.json';
-import 'file-loader?name=[name].[ext]!./.htaccess';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import configureStore from './store';
@@ -59,12 +62,6 @@ const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: makeSelectLocationState(),
 });
 
-// Set up the router, wrapping all Routes in the App component
-const rootRoute = {
-  component: App,
-  childRoutes: createRoutes(store),
-};
-
 const render = (messages) => {
   ReactDOM.render(
     <MuiThemeProvider>
@@ -72,7 +69,7 @@ const render = (messages) => {
         <LanguageProvider messages={messages}>
           <Router
             history={history}
-            routes={rootRoute}
+            routes={createRoutes(store)}
             render={
               // Scroll to top when going to a new page, imitating default browser
               // behaviour

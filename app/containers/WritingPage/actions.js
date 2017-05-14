@@ -7,6 +7,7 @@
 import {
   DEFAULT_ACTION,
   CHANGE_WORDS,
+  UPDATE_ENTRY
 } from './constants';
 
 function defaultAction() {
@@ -18,7 +19,14 @@ function defaultAction() {
 function changeWords(words) {
   return {
     type: CHANGE_WORDS,
-    words,
+    words
+  };
+}
+
+function updateEntry(words) {
+  return {
+    type: UPDATE_ENTRY,
+    words
   };
 }
 
