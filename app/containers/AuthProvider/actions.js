@@ -1,34 +1,21 @@
-/*
- *
- * AuthProvider actions
- *
- */
-
 import {
   AUTHENTICATED,
+  AUTHENTICATING,
   DEAUTHENTICATED,
-  LOGIN_REQUEST,
   LOGOUT,
-  LOGIN
+  LOGIN,
 } from './constants';
 
 export function authenticating() {
-  return {
-    type: AUTHENTICATING
-  };
+  return { type: AUTHENTICATING };
 }
 
 export function authenticated(authenticatedUser) {
-  return {
-    type: AUTHENTICATED,
-    authenticatedUser: authenticatedUser
-  };
+  return { type: AUTHENTICATED, authenticatedUser };
 }
 
 export function deauthenticated() {
-  return {
-    type: DEAUTHENTICATED
-  };
+  return { type: DEAUTHENTICATED };
 }
 
 /**
@@ -36,12 +23,9 @@ export function deauthenticated() {
  * @param  {object} data          The data we're sending for log in
  */
 export function login(credentials) {
-  return {type: LOGIN, credentials}
+  return { type: LOGIN, credentials };
 }
 
 export function logout(error) {
-  return {
-    type: LOGOUT,
-    error: error
-  };
+  return { type: LOGOUT, error };
 }

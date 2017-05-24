@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
-
-import messages from './messages';
-import LoginForm from 'components/LoginForm';
-import { makeSelectEmail, makeSelectPassword, selectLoginPageDomain } from './selectors';
-import { changeEmail, changePassword } from './actions';
 import { login } from 'containers/AuthProvider/actions';
+import LoginForm from 'components/LoginForm';
+import messages from './messages';
+import { makeSelectEmail, makeSelectPassword } from './selectors';
+import { changeEmail, changePassword } from './actions';
 
 export class LoginPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -34,22 +33,24 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
 }
 
 LoginPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   email: PropTypes.string,
   password: PropTypes.string,
+  onEmailChange: PropTypes.func,
+  onPasswordChange: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
-  password: makeSelectPassword()
+  password: makeSelectPassword(),
 });
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     onSubmit: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(login({email: makeSelectEmail, password: makeSelectPassword}));
+      dispatch(login({ email: makeSelectEmail, password: makeSelectPassword }));
     },
     onEmailChange: (evt) => {
       dispatch(changeEmail(evt.target.value));

@@ -1,117 +1,89 @@
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const passportJWT = require("passport-jwt");
+const passportJWT = require('passport-jwt');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
-const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
 
-var users = [
+const users = [
   {
     id: 1,
     email: 'dwight@dwightgunning.com',
-    password: 'test'
+    password: 'test',
   },
   {
     id: 2,
     email: 'test@email.com',
-    password: 'test'
-  }
+    password: 'test',
+  },
 ];
 
-var jwtOptions = {}
+const jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
 jwtOptions.secretOrKey = 'tasmanianDevil';
 
-var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  console.log('payload received', jwt_payload);
+passport.use(new JwtStrategy(jwtOptions, (jwtPayload, next) => {
   // usually this would be a database call:
-  var user = users.find((user) => user.id === jwt_payload.id);
-  if (user) {
-    next(null, user);
+  const existingUser = users.find((user) => user.id === jwtPayload.id);
+  if (existingUser) {
+    next(null, existingUser);
   } else {
     next(null, false);
   }
+}));
+
+passport.serializeUser((user, done) => done(null, user.email));
+
+passport.deserializeUser((id, done) => {
+  done(null, { email: 'dwight@dwightgunning.com' });
 });
-
-passport.use(strategy);
-
-passport.serializeUser(function(user, done) {
-  done(null, user.email);
-});
-
-passport.deserializeUser(function(id, done) {
-  done(null, {email: 'dwight@dwightgunning.com'});
-});
-
-passport.use(new LocalStrategy(
-  function(email, password, done) {
-
-    // return done(null, {email: 'dwight@dwightgunning.com'});
-
-
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
 
 const router = express.Router();
 router.use(passport.initialize());
 router.use(bodyParser.json());
 
-router.use(function(req, res, next) {
-  next();
-});
+router.use((req, res, next) => next()); // TODO: Name this magical function
 
-router.post("/login", function(req, res) {
-  if(req.body.email && req.body.password) {
-    var email = req.body.email;
-    var password = req.body.password;
+router.post('/login', (req, res) => {
+  let resp;
+  let email;
+  let password;
+
+  if (req.body.email && req.body.password) {
+    email = req.body.email;
+    password = req.body.password;
   } else {
-    return res.status(400);
+    resp = res.status(400);
   }
   // usually this would be a database call:
-  var user = users.find((user) => { console.log(user); return user.email == email});
-
-  if( ! user ){
-    res.status(401).json({message:"no user found"});
-    return;
+  const existingUser = users.find((user) => user.email === email);
+  if (!existingUser) {
+    resp = res.status(401).json({ message: 'no user found' });
   }
-
-  if(user.password === password) {
+  if (existingUser.password === password) {
     // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-    var payload = {id: user.id};
-    var token = jwt.sign(payload, jwtOptions.secretOrKey);
-    res.json({email: user.email, token: token});
+    const payload = { id: existingUser.id };
+    const token = jwt.sign(payload, jwtOptions.secretOrKey);
+    resp = res.json({ email: existingUser.email, token });
   } else {
-    res.status(401).json({message:"passwords did not match"});
+    resp = res.status(401).json({ message: 'passwords did not match' });
   }
+  return resp;
 });
 
-router.post('/logout',
-  function(req, res) {
-    // TODO: Drop the session
-    res.send("OK");
-  });
+router.post('/logout', (req, res) => res.send('OK'));
 
 router.post('/signup',
-  function(req, res) {
+  (req, res) => {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     res.send(req.user);
   });
 
-router.post('/words', function(req, res) {
-  res.send("OK");
-});
+router.post('/words',
+  (req, res) => {
+    res.send('OK');
+  });
 
-module.exports = router
+module.exports = router;

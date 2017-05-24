@@ -3,9 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the LoginPage state domain
  */
-const selectLoginPageDomain = () => (state) => {
-  return state.get('loginPage');
-}
+const selectLoginPageDomain = () => (state) => state.get('loginPage');
 
 /**
  * Other specific selectors
@@ -14,12 +12,12 @@ const selectLoginPageDomain = () => (state) => {
 const makeSelectEmail = () => createSelector(
   selectLoginPageDomain(),
   (substate) => substate.get('email')
-)
+);
 
 const makeSelectPassword = () => createSelector(
   selectLoginPageDomain(),
   (substate) => substate.get('password')
-)
+);
 
 /**
  * Default selector used by LoginForm2Container
@@ -34,5 +32,5 @@ export {
   makeSelectEmail,
   makeSelectPassword,
   makeSelectLoginForm2Container,
-  selectLoginPageDomain
-}
+  selectLoginPageDomain,
+};

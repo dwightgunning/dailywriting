@@ -8,7 +8,6 @@ const selectSignupPageDomain = () => (state) => state.get('signupPage');
 /**
  * Other specific selectors
  */
-
 const makeSelectEmail = () => createSelector(
   selectSignupPageDomain(),
   (signupState) => signupState.get('email')
@@ -22,7 +21,6 @@ const makeSelectPassword = () => createSelector(
 /**
  * Default selector used by SignupPage
  */
-
 const makeSelectSignupPage = () => createSelector(
   selectSignupPageDomain(),
   (substate) => substate.toJS()

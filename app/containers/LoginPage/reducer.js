@@ -1,18 +1,10 @@
-/*
- *
- * LoginPage reducer
- *
- */
-
 import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
   EMAIL_CHANGE,
-  PASSWORD_CHANGE
+  PASSWORD_CHANGE,
 } from './constants';
-import {
-  AUTHENTICATED
-} from '../AuthProvider/constants';
+import { AUTHENTICATED } from '../AuthProvider/constants';
 
 const initialState = fromJS({
   email: '',

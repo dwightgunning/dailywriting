@@ -1,14 +1,7 @@
-/*
- *
- * AuthProvider reducer
- *
- */
-
 import { fromJS } from 'immutable';
-
 import {
   AUTHENTICATED,
-  DEAUTHENTICATED
+  DEAUTHENTICATED,
 } from './constants';
 
 const initialState = fromJS({

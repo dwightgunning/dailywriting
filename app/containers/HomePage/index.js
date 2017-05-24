@@ -11,10 +11,9 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import { Link } from 'react-router';
-
 import { Card, CardText } from 'material-ui/Card';
+import messages from './messages';
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -24,7 +23,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
           <FormattedMessage {...messages.header} />
         </h1>
         <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
-        <CardText>Don't have an account? <Link to={'/signup'}>Create one</Link>.</CardText>
+        <CardText>Need an account? <Link to={'/signup'}>Create one</Link>.</CardText>
       </Card>
     );
   }

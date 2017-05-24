@@ -27,7 +27,7 @@ export default function createRoutes(store) {
   * @param  {function} replace Function provided by React Router to replace the location
   */
   const checkAuth = (nextState, replace) => {
-    let authenticatedUser = makeSelectAuthenticatedUser()(store.getState());
+    const authenticatedUser = makeSelectAuthenticatedUser()(store.getState());
 
     store.dispatch(clearError());
 
@@ -43,7 +43,7 @@ export default function createRoutes(store) {
     } else if (!authenticatedUser && nextState.location.pathname !== '/') {
       replace('/');
     }
-  }
+  };
 
   // react-boilerplate modified for global sagas
   // See: https://github.com/react-boilerplate/react-boilerplate/pull/1545
@@ -148,14 +148,12 @@ export default function createRoutes(store) {
   return {
     getComponent(nextState, cb) {
       const importModules = Promise.all([
-        // import('containers/App/sagas'),
         import('containers/App'),
       ]);
 
       const renderRoute = loadModule(cb);
 
-      importModules.then(([/*sagas,*/ component]) => {
-        // injectSagas(sagas.default);
+      importModules.then(([component]) => {
         renderRoute(component);
       });
 

@@ -17,26 +17,16 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { useScroll } from 'react-router-scroll';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import 'sanitize.css/sanitize.css';
-
-// Tap Events for Material UI
 import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin()
-
-// Import root app
-import App from 'containers/App';
-
 // Import selector for `syncHistoryWithStore`
 import { makeSelectLocationState } from 'containers/App/selectors';
-
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
-
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */
 import '!file-loader?name=[name].[ext]!./favicon.ico';
 import '!file-loader?name=[name].[ext]!./manifest.json';
 /* eslint-enable import/no-unresolved, import/extensions */
-
 import configureStore from './store';
 
 // Import i18n messages
@@ -47,6 +37,9 @@ import './global-styles';
 
 // Import root routes
 import createRoutes from './routes';
+
+// Tap Events for Material UI
+injectTapEventPlugin();
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
