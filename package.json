@@ -172,9 +172,14 @@
       "compression",
       "cross-env",
       "express",
+      "nodemon",
       "ip",
       "minimist",
-      "sanitize.css"
+      "passport-jwt",
+      "pg",
+      "sanitize.css",
+      "sequelize",
+      "sqlite3"
     ],
     "include": [
       "core-js",
@@ -217,7 +222,6 @@
     "cross-env": "3.1.3",
     "express": "4.14.0",
     "fontfaceobserver": "2.0.7",
-    "fs": "^0.0.1-security",
     "history": "^3.0.0",
     "immutable": "3.8.1",
     "intl": "1.2.5",
@@ -287,6 +291,7 @@
     "eventsource-polyfill": "0.9.6",
     "exports-loader": "0.6.3",
     "file-loader": "0.9.0",
+    "fs": "^0.0.1-security",
     "html-loader": "0.4.4",
     "html-webpack-plugin": "2.24.1",
     "image-webpack-loader": "2.0.0",
