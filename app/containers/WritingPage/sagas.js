@@ -18,7 +18,7 @@ export function * updateEntry() {
   yield put({type: SENDING_REQUEST, sending: true});
 
   try {
-    // Select username from store
+    // Select words from store
     const words = yield select(makeSelectWords());
 
     const requestURL = 'http://localhost:3000/api/words';

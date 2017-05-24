@@ -37,7 +37,7 @@ export function * authServiceLogin(data) {
 
   // We then try to register or log in the user, depending on the request
   try {
-    const username = yield select(data.email());
+    const email = yield select(data.email());
     const password = yield select(data.password());
 
     const requestURL = 'http://localhost:3000/api/login';
@@ -46,7 +46,7 @@ export function * authServiceLogin(data) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({username, password})
+      body: JSON.stringify({email, password})
     }
 
     // TODO: Figure out how to check for valid/invalid response objects
@@ -120,7 +120,8 @@ function* authorize(credentials) {
   }
   // user logged out before server response OR server responded first but with error
   else {
-    yield call(logoutEffect, authenticatedUser ? error : 'User logged out');
+    yield call(logoutEffect, 'Error while logging in.');
+    // TODO: This should probably yield an error
     return null;
   }
 }

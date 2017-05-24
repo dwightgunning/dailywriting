@@ -19,8 +19,8 @@ export function* signup() {
 
   // We then try to register or log in the user, depending on the request
   try {
-    // Select username from store
-    const username = yield select(makeSelectEmail());
+    // Select email and password from store
+    const email = yield select(makeSelectEmail());
     const password = yield select(makeSelectPassword());
 
     const requestURL = 'http://localhost:3000/api/signup';
@@ -29,7 +29,7 @@ export function* signup() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({username, password})
+      body: JSON.stringify({email, password})
     }
 
     yield call(request, requestURL, options);
